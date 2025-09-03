@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Регистрация {% endblock %}
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data" class="form-control d-flex flex-column gap-2">
+        {{form.csrf_token}}
+        {{form.name(class="form-control", placeholder="ФИО")}}
+        
+        
+        {{form.login(class="form-control", placeholder="Логин")}}
+        {% if form.login.errors %}
+            <div class="invalid-feeback">
+                {% for error in form.login.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {{form.avatar(class="form-control")}}
+        {{form.password(class="form-control", placeholder="Пароль")}}
+        {{form.confirm_password(class="form-control", placeholder="Подтвердите пароль")}}
+        {{form.submit(class="btn btn-success")}}
+    </form>
+{% endblock %}

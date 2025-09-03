@@ -1,0 +1,194 @@
+/* TABLE */
+
+.custom-table th {
+  font-size: 18px;
+  text-align: center; /* Center content */
+}
+
+.custom-table td {
+  font-size: 20px;
+  text-align: center; /* Center content */
+}
+
+.content {
+  padding: 7rem 0; }
+
+h2 {
+  font-size: 20px;
+  color: #fff; }
+
+.custom-table {
+  min-width: 340px; }
+  .custom-table thead tr, .custom-table thead th {
+    border-top: none;
+    border-bottom: none !important;
+    background: #2e2e36;
+    color: #b3b3b3;
+  }
+  .custom-table tbody th, .custom-table tbody td {
+    color: #777;
+    font-weight: 400;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-weight: 300; }
+    .custom-table tbody th small, .custom-table tbody td small {
+      color: #b3b3b3;
+      font-weight: 300; }
+  .custom-table tbody tr:not(.spacer) {
+    border-radius: 7px;
+    overflow: hidden;
+    -webkit-transition: .3s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease; }
+    .custom-table tbody tr:not(.spacer):hover {
+      -webkit-box-shadow: 0 2px 10px -5px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 10px -5px rgba(0, 0, 0, 0.1); }
+  .custom-table tbody tr th, .custom-table tbody tr td {
+    background: #25252b;
+    border: none;
+    -webkit-transition: .3s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease; }
+    .custom-table tbody tr th a, .custom-table tbody tr td a {
+      color: #b3b3b3; }
+    .custom-table tbody tr th:first-child, .custom-table tbody tr td:first-child {
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px; }
+    .custom-table tbody tr th:last-child, .custom-table tbody tr td:last-child {
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px; }
+  .custom-table tbody tr.spacer td {
+    padding: 0 !important;
+    height: 3px;
+    border-radius: 0 !important;
+    background: transparent !important; }
+  .custom-table tbody tr.active th, .custom-table tbody tr.active td, .custom-table tbody tr:hover th, .custom-table tbody tr:hover td {
+    color: #fff;
+    background: #2e2e36; }
+    .custom-table tbody tr.active th a, .custom-table tbody tr.active td a, .custom-table tbody tr:hover th a, .custom-table tbody tr:hover td a {
+      color: #fff; }
+
+
+.custom-table th.limited-width,
+.custom-table td.limited-width {
+    width: 500px;
+}
+
+@media (max-width: 1140px) {
+    .custom-table th.limited-width,
+    .custom-table td.limited-width {
+        width: 150px;
+    }
+}
+
+.custom-table td input {
+    all: unset; /* Сбрасываем дефолтные стили */
+    position: relative; /* Задаем относительное позиционирование */
+    font-family: "Arial", sans-serif; /* Наследуем стиль шрифта */
+    font-size: 16px; /* Увеличиваем размер текста */
+    color: #d3d3d3; /* Цвет текста */
+    padding: 5px 8px; /* Внутренние отступы */
+    border: 1px solid #444; /* Темная граница */
+    border-radius: 4px; /* Закругленные углы */
+    background-color: #1f1f1f; /* Темный фон */
+    box-sizing: border-box; /* Учитываем отступы */
+    width: 100%;
+}
+
+
+/* Контейнер для инпута и кнопки */
+.input-with-span {
+    position: relative;
+    width: 100%; /* Ширина контейнера */
+    max-width: 400px; /* Ограничение ширины контейнера */
+}
+
+/* Сам инпут */
+.input-with-span input {
+    width: 100%; /* Инпут занимает всю ширину контейнера */
+    padding-right: 40px; /* Отступ справа для кнопки */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #1f1f1f;
+    color: #d3d3d3;
+    box-sizing: border-box;
+}
+
+/* Кнопка "глаз" */
+.input-with-span .btn-eye {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Отступ от правого края */
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #d3d3d3;
+    padding: 0;
+    outline: none;
+}
+
+.input-with-span .btn-eye:hover {
+    color: white;
+}
+
+.custom-table td .btn {
+    border-radius: 4px; /* Закругленные углы */
+    width: auto; /* Автоматическая ширина */
+}
+
+.custom-table td .btn-success {
+    background-color: #28a745; /* Зеленый фон */
+    border: none; /* Убираем стандартную границу */
+}
+
+.custom-table td .btn-success:hover {
+    background-color: #218838; /* Темно-зеленый при наведении */
+}
+
+.custom-table td .btn-success:active {
+    background-color: #1e7e34; /* Сатурированный зеленый при клике */
+}
+
+.custom-table td select {
+    all: unset; /* Сбрасываем дефолтные стили */
+    font-family: "Arial", sans-serif; /* Шрифт */
+    font-size: 16px; /* Размер текста */
+    color: #d3d3d3; /* Цвет текста */
+    padding: 5px 8px; /* Отступы */
+    border: 1px solid #444; /* Темная граница */
+    border-radius: 4px; /* Закругленные углы */
+    background-color: #1f1f1f; /* Темный фон */
+    width: 100%; /* Ширина */
+    box-sizing: border-box; /* Учитываем отступы */
+    appearance: none; /* Убираем стандартный вид браузера */
+    cursor: pointer; /* Курсор-указатель при наведении */
+}
+
+@media (max-width: 1140px) {
+    .custom-table td select {
+        width: 100%;
+    }
+}
+
+.custom-table td select:hover {
+    border-color: #888; /* Цвет границы при наведении */
+}
+
+.custom-table td select:focus {
+    outline: none; /* Убираем стандартный фокус */
+    border-color: #28a745; /* Зеленая граница при фокусе */
+}
+
+.custom-table td select option {
+    font-family: "Arial", sans-serif; /* Шрифт */
+    font-size: 16px; /* Размер текста */
+    color: #000; /* Цвет текста */
+    background-color: #fff; /* Белый фон */
+    padding: 5px 8px; /* Отступы */
+    border: none; /* Убираем границы */
+}
+

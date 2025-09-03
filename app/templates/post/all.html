@@ -1,0 +1,57 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Все посты {% endblock %}
+
+{% block style %}  
+    <link rel="stylesheet" href="{{url_for('static', filename='css/blocks/table.css')}}"> 
+    <link rel="stylesheet" href="{{url_for('static', filename='css/libs/font-awesome.min.css')}}"> 
+{% endblock %}
+
+
+
+
+{% block content %}
+<form method="post" class="form-control d-flex flex-row gap-2" id="teacherForm">
+    {{form.csrf_token}}
+    {{form.teacher}}
+    <input type="submit" class="btn btn-success" value="Показать">
+</form>
+
+<div class = "table-responsive custom-table-responsive">
+    <table class="table custom-table">
+        <thead>
+            <tr>
+                <th scope="col">Преподаватель</th>
+                <th scope="col">Пост</th>
+                <th scope="col">Студент</th>
+                {% if current_user.is_authenticated %} <th scope="col">Действия</th>  {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr scope="row">
+                <td>
+                    <img width="96px" height="96px" src="{{url_for('static',filename='upload/'+post.author.avatar)}}" alt="Автор">
+                    {{ post.author.name }}
+                </td>
+                <td>{{ post.postname }}</td>
+                
+                <td>
+                    {% with student = user.query.get(post.student) %}
+                        <img width="96px" height="96px" src="{{url_for('static',filename='upload/'+student.avatar)}}" alt="Студент">
+                        {{student.name}}
+                    {% endwith %}
+
+                </td> 
+                <td>
+                    {% if current_user.is_authenticated and post.author.id == current_user.id %}
+                    <a href="{{url_for('post.update', id = post.id_post)}}" class="btn btn-sm btn-secondary"><span class="fa fa-edit"></span></a>
+                    <a href="{{url_for('post.delete', id = post.id_post)}}" class="btn btn-sm btn-danger"><span class="fa fa-trash"></span></a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %} 
