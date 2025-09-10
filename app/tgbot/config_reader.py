@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     # через model_config
     # В данном случае будет использоваться файла .env, который будет прочитан
     # с кодировкой UTF-8
-    model_config = SettingsConfigDict(env_file='/home/damir/dev/project-flask/app/tgbot/.env', env_file_encoding='utf-8')
+    model_config = SettingsConfigDict(env_file='/home/damir/dev/project-flask/app/tgbot/.venv', env_file_encoding='utf-8')
 
 
 # При импорте файла сразу создастся 
