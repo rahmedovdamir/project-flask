@@ -18,6 +18,8 @@
         {% endif %}
 
         {{form.avatar(class="form-control")}}
+        {{form.group(class="form-control", placeholder="Группа")}}
+        {{form.status(class="form-control")}}
         {{form.password(class="form-control", placeholder="Пароль")}}
         {{form.confirm_password(class="form-control", placeholder="Подтвердите пароль")}}
         {{form.submit(class="btn btn-success")}}

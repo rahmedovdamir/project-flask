@@ -1,0 +1,202 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div id="schedule"></div>
+</div>
+
+<style>
+    .week {
+        margin-bottom: 40px;
+        border: 2px solid #3498db;
+        border-radius: 8px;
+        padding: 15px;
+        background: #ecf0f1;
+    }
+    .week-header {
+        background: #3498db;
+        color: white;
+        padding: 15px;
+        margin: -15px -15px 20px -15px;
+        border-radius: 6px 6px 0 0;
+        text-align: center;
+    }
+    .day {
+        margin-bottom: 20px;
+    }
+    .day-title {
+        background: #2c3e50;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    .lessons-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 15px;
+    }
+    .lesson {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #e74c3c;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .lesson.lecture { border-left-color: #3498db; }
+    .lesson.lab { border-left-color: #e74c3c; }
+    .lesson.practice { border-left-color: #2ecc71; }
+    
+    .lesson-time {
+        font-weight: bold;
+        color: #7f8c8d;
+        margin-bottom: 5px;
+    }
+    .lesson-type {
+        font-weight: bold;
+        color: #e74c3c;
+        margin-bottom: 5px;
+    }
+    .lesson-name {
+        font-size: 16px;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 8px;
+    }
+    .lesson-teacher {
+        color: #7f8c8d;
+        font-style: italic;
+        margin-bottom: 5px;
+    }
+    .lesson-location {
+        color: #27ae60;
+        font-weight: bold;
+    }
+    .empty-day {
+        text-align: center;
+        color: #95a5a6;
+        font-style: italic;
+        padding: 20px;
+    }
+    
+    @media (max-width: 768px) {
+        .lessons-container {
+            grid-template-columns: 1fr;
+        }
+        .container {
+            padding: 10px;
+        }
+    }
+</style>
+
+<script>
+    async function loadSchedule() {
+        try {
+            const groupNumber = "{{ group_number }}";
+            const response = await fetch(`/static/json/schedule_data_${groupNumber}.json`);
+            const events = await response.json();
+            displaySchedule(events);
+        } catch (error) {
+            console.error('Ошибка загрузки данных:', error);
+            document.getElementById('schedule').innerHTML = `
+                <div style="text-align: center; color: red; padding: 40px;">
+                    <h3>Ошибка загрузки расписания</h3>
+                    <p>Проверьте, что файл schedule_data.json существует</p>
+                </div>
+            `;
+        }
+    }
+
+    function displaySchedule(events) {
+        const scheduleContainer = document.getElementById('schedule');
+        
+        if (!events || events.length === 0) {
+            scheduleContainer.innerHTML = '<p>Нет данных о расписании</p>';
+            return;
+        }
+
+        let html = '';
+
+        events.forEach((week, weekIndex) => {
+            const hasLessons = Object.values(week).some(day => 
+                typeof day === 'object' && day !== null && Object.keys(day).length > 0
+            );
+
+            if (!hasLessons) return;
+
+            html += `
+                <div class="week">
+                    <div class="week-header">
+                        <h2>${week.week_count || `Неделя ${weekIndex + 1}`}</h2>
+                        <div>${week.dstart || ''} - ${week.dend || ''}</div>
+                    </div>
+            `;
+
+            const daysOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            const russianDays = {
+                'Monday': 'Понедельник',
+                'Tuesday': 'Вторник',
+                'Wednesday': 'Среда',
+                'Thursday': 'Четверг',
+                'Friday': 'Пятница',
+                'Saturday': 'Суббота',
+                'Sunday': 'Воскресенье'
+            };
+
+            daysOrder.forEach(dayKey => {
+                const day = week[dayKey];
+                if (day && Object.keys(day).length > 0) {
+                    html += `
+                        <div class="day">
+                            <div class="day-title">${russianDays[dayKey]}</div>
+                            <div class="lessons-container">
+                    `;
+
+                    const times = Object.keys(day).sort();
+                    const timeLabels = {
+                        '1': '1: 09:00-10:30',
+                        '2': '2: 10:40-12:10', 
+                        '3': '3: 12:40-14:10',
+                        '4': '4: 14:20-15:50',
+                        '5': '5: 16:20-17:50',
+                        '6': '6: 18:00-19:30',
+                        '7': '7: 19:40-21:10'
+                    };
+
+
+                    times.forEach(time => {
+                        const lesson = day[time];
+                        const lessonType = lesson.type_lesson?.toLowerCase() || '';
+                        const typeClass = lessonType.includes('лаб') ? 'lab' : 
+                                        lessonType.includes('лек') ? 'lecture' : 'practice';
+
+                        html += `
+                            <div class="lesson ${typeClass}">
+                                <div class="lesson-time">${timeLabels[time] || 'Время'}</div>
+                                <div class="lesson-type">${lesson.type_lesson || ''}</div>
+                                <div class="lesson-name">${lesson.name_lesson || ''}</div>
+                                <div class="lesson-teacher">${lesson.teacher || ''}</div>
+                                <div class="lesson-location">${lesson.location || ''}</div>
+                            </div>
+                        `;
+                    });
+
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            html += `</div>`;
+        });
+
+        scheduleContainer.innerHTML = html || '<p>Нет занятий на выбранный период</p>';
+    }
+
+    // Загружаем расписание при загрузке страницы
+    document.addEventListener('DOMContentLoaded', loadSchedule);
+</script>
+{% endblock %}

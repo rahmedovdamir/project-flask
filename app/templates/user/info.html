@@ -1,0 +1,122 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        .profile-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .profile-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #1c0e0e;
+        }
+
+        .profile-info {
+            width: 100%;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #666;
+        }
+
+        .info-value {
+            color: #333;
+            text-align: right;
+        }
+
+        @media (max-width: 480px) {
+            .profile-container {
+                padding: 20px;
+            }
+            
+            .profile-photo {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .info-item {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .info-value {
+                text-align: left;
+            }
+        }
+    </style>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>Профиль пользователя</h1>
+        </div>
+        
+        <div class="profile-content">
+            <img src="{{ url_for('static', filename='upload/' + current_user.avatar )}}" 
+                 alt="Фото пользователя" class="profile-photo">
+            
+            <div class="profile-info">
+                <div class="info-item">
+                    <span class="info-label">Имя:</span>
+                    <span class="info-value">{{ current_user.name }}</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Логин:</span>
+                    <span class="info-value">{{ current_user.login }}</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Группа:</span>
+                    <span class="info-value">{{ current_user.group }}</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Должность:</span>
+                    <span class="info-value">   {{ "Студент" if current_user.status == "student" else "Преподаватель" }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -13,6 +13,8 @@ class User(db.Model, UserMixin):
     status = db.Column(db.String(50), default='user')
     avatar = db.Column(db.String(200))
     name = db.Column(db.String(50))
+    tgid = db.Column(db.String(50))
     login = db.Column(db.String(50))
     password = db.Column(db.String(200))
+    group = db.Column(db.String(20))
     date = db.Column(db.DateTime, default = datetime.utcnow)

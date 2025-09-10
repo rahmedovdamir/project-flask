@@ -2,21 +2,19 @@
   <div class="container">
       <ul class="nav justify-content-center border-bottom pb-3 mb-3">
         <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-white">Home</a>
+          <a href="{{url_for('post.all')}}" class="nav-link px-2 text-white">Лента</a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-white">Features</a>
+          {% if current_user.is_authenticated %}
+            <a href="{{ url_for('schedule.all', group_id=current_user.group) }}" class="nav-link px-2 text-white">Расписание</a>
+          {% else %}
+            <a href="{{ url_for('user.login') }}" class="nav-link px-2 text-white">Расписание</a>
+          {% endif %}
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-white">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-white">FAQs</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-white">About</a>
+          <a href="https://rahmedovdamir.ru/" class="nav-link px-2 text-white">Портфолио</a>
         </li>
       </ul>
-      <p class="text-center text-white">© 2025 Company, Inc</p>
+      <p class="text-center text-white">© Damir Rahmedov</p>
   </div>
 </footer>

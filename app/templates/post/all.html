@@ -1,6 +1,6 @@
 {% extends 'main/base.html' %}
 
-{% block title %} Все посты {% endblock %}
+{% block title %} {% endblock %}
 
 {% block style %}  
     <link rel="stylesheet" href="{{url_for('static', filename='css/blocks/table.css')}}"> 
@@ -24,7 +24,7 @@
                 <th scope="col">Преподаватель</th>
                 <th scope="col">Пост</th>
                 <th scope="col">Студент</th>
-                {% if current_user.is_authenticated %} <th scope="col">Действия</th>  {% endif %}
+                <th scope="col">Действия</th>  
             </tr>
         </thead>
         <tbody>

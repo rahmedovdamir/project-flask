@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Привязка к тг-боту {% endblock %}
+
+{% block content %}
+    <h4>Каждое утро вам будет отправлено ваше расписание на день </h4>
+    <form method="post" class="form-control d-flex flex-column gap-2">
+        {{form.csrf_token}}
+        {{form.tg_id(class="form-control", placeholder="Введите цифровой ID (только цифры)")}}
+        {{form.submit(class="btn btn-success")}}
+    </form>
+{% endblock %}

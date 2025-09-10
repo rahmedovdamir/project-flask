@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request , redirect , flash , abort
+from flask import Blueprint, render_template, request , redirect , flash , abort, url_for
 from flask_login import login_required, current_user
 from ..extensions import db
 from ..models.user import User
@@ -12,11 +12,17 @@ post = Blueprint('post', __name__)
 @post.route('/', methods=['POST','GET'])
 def all():
     form = TeacherForm()
-    form.teacher.choices = [t.name for t in User.query.filter_by(status='teacher')]
+    form.teacher.choices = ['Выберите преподавателя']
+    for t in User.query.filter_by(status='teacher'):
+        form.teacher.choices.append(t.name)
     if request.method=="POST":
         teacher = request.form['teacher']
-        teacher_id = User.query.filter_by(name=teacher).first().id
-        posts = Post.query.filter_by(teacher=teacher_id).order_by(Post.date.desc()).all()
+        if teacher == "Выберите преподавателя":
+            flash('Выберите преподавателя!', 'error')
+            return redirect('/')
+        else:
+            teacher_id = User.query.filter_by(name=teacher).first().id
+            posts = Post.query.filter_by(teacher=teacher_id).order_by(Post.date.desc()).all()
     else:
         posts = Post.query.order_by(Post.date.desc()).limit(20).all()
     return render_template('post/all.html', posts=posts, user=User, form=form)
