@@ -1,2 +1,6 @@
 .venv
 .flaskenv
+venv/*
+migrations/*
+*.venv_
+__pycache__/
