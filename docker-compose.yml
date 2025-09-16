@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:17 
+    container_name: postgres
+    volumes:
+      - ~/.pg/pg_data/flask:/var/lib/postgresql/data
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+
+  flask:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: flask
+    volumes:
+      - ~/.upload/json/flask:/app/app/static/json
+      - ~/.upload/images/flask:/app/app/static/upload
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=${POSTGRES_DB}
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+    depends_on:
+      - postgres
+    expose:
+      - 8080
+  
+  nginx:
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx/
+    container_name: nginx
+    env_file:
+      - .env
+    depends_on:
+      - flask
+    ports:
+      - "8080:80"

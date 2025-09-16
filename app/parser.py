@@ -69,5 +69,5 @@ def parsing(ics_path, group_number):
                 events[counter_week][day_week][count_pars]["teacher"] = teacher
                 events[counter_week][day_week][count_pars]["locatiton"] = location
         events.append(week)
-    with open(f'/home/damir/dev/project-flask/app/static/json/schedule_data_{str(group_number)}.json', 'w', encoding='utf-8') as f:
+    with open(f'app/static/json/schedule_data_{str(group_number)}.json', 'w', encoding='utf-8') as f:
         json.dump(events, f, ensure_ascii=False, indent=2)

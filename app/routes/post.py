@@ -32,7 +32,7 @@ def all():
 @login_required
 def create():
     form = StudentForm()
-    form.student.choices = [s.name for s in User.query.filter_by(status='user')]
+    form.student.choices = [s.name for s in User.query.filter_by(status='student')]
     if request.method == 'POST':
         postname= request.form.get('postname')
         student = request.form.get('student')  
