@@ -1,8 +1,8 @@
-.venv
+.env
 .flaskenv
 venv/*
 migrations/*
-*.venv_
+*.env_
 __pycache__/
 venv/
 env/
